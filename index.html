@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Агенство праздников "Happy Day"</title>
+
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #222;
+        background: #f4f0e8;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+        max-width: 1150px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    header {
+        background: #1b1b1b;
+        color: #fff;
+        padding: 18px 0;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+    }
+    header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #d4a548;
+        letter-spacing: 1px;
+    }
+    nav ul {
+        display: flex;
+        gap: 25px;
+    }
+    nav a {
+        color: #eee;
+        font-size: 15px;
+        padding: 5px 0;
+        border-bottom: 2px solid transparent;
+        transition: all 0.25s;
+    }
+    nav a:hover {
+        color: #d4a548;
+        border-bottom-color: #d4a548;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #1b1b1b 0%, #3a2a18 100%);
+        color: #fff;
+        padding: 80px 30px;
+        text-align: center;
+    }
+    .hero h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+    }
+    .hero h1 span {
+        color: #d4a548;
+        font-style: italic;
+    }
+    .hero p {
+        font-size: 18px;
+        max-width: 600px;
+        margin: 0 auto 30px;
+        color: #ddd;
+    }
+    .btn {
+        display: inline-block;
+        background: #d4a548;
+        color: #1b1b1b;
+        padding: 14px 32px;
+        border: 2px solid #d4a548;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.25s;
+    }
+    .btn:hover {
+        background: #e6c275;
+        border-color: #e6c275;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(212, 165, 72, 0.4);
+    }
+    .btn--ghost {
+        background: transparent;
+        color: #fff;
+        margin-left: 10px;
+    }
+    .btn--ghost:hover {
+        background: #fff;
+        color: #1b1b1b;
+    }
+
+    main { flex: 1; }
+
+    section {
+        padding: 60px 0;
+    }
+    section.dark {
+        background: #2a2a2a;
+        color: #fff;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 32px;
+        margin-bottom: 15px;
+    }
+    .section-lead {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        color: #666;
+        font-size: 16px;
+    }
+    .dark .section-lead { color: #bbb; }
+
+    .about-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+        text-align: center;
+    }
+    .about-grid div {
+        padding: 25px;
+    }
+    .about-grid h3 {
+        color: #d4a548;
+        font-size: 36px;
+        margin-bottom: 5px;
+    }
+    .about-grid p {
+        color: #555;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 35px;
+        flex-wrap: wrap;
+    }
+    .tab {
+        background: transparent;
+        color: #fff;
+        border: 2px solid #555;
+        padding: 8px 22px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.25s;
+    }
+    .tab:hover {
+        border-color: #d4a548;
+        color: #d4a548;
+    }
+    .tab.active {
+        background: #d4a548;
+        color: #1b1b1b;
+        border-color: #d4a548;
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .dish {
+        background: #1b1b1b;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 25px;
+        transition: all 0.3s;
+    }
+    .dish:hover {
+        transform: translateY(-5px);
+        border-color: #d4a548;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+    .dish-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .dish h3 { font-size: 20px; }
+    .dish .price {
+        color: #d4a548;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .dish p {
+        color: #bbb;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .dish .time {
+        color: #888;
+        font-size: 12px;
+        font-style: italic;
+    }
+
+    .chefs {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+    }
+    .chef {
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+    }
+    .chef:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+    }
+    .chef-photo {
+        background: linear-gradient(135deg, #3a2a18, #1b1b1b);
+        color: #d4a548;
+        width: 100%;
+    }
+    .chef-body { padding: 20px; }
+    .chef h3 { margin-bottom: 5px; }
+    .chef .role {
+        color: #d4a548;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+    .chef p {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .reviews {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .review {
+        background: #1b1b1b;
+        border-left: 4px solid #d4a548;
+        padding: 25px;
+        border-radius: 5px;
+        transition: transform 0.25s;
+    }
+    .review:hover { transform: translateY(-3px); }
+    .stars {
+        color: #d4a548;
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+    .review p {
+        font-style: italic;
+        color: #ddd;
+        margin-bottom: 15px;
+    }
+    .review .author {
+        color: #d4a548;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .contacts-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
+    .contacts-info p { margin-bottom: 12px; }
+    .contacts-info strong { color: #1b1b1b; }
+    .phone {
+        font-size: 28px;
+        color: #d4a548;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 15px;
+        transition: color 0.2s;
+    }
+    .phone:hover { color: #b8881e; }
+
+    form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    form h3 { margin-bottom: 15px; }
+    form input, form select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+    form input:focus, form select:focus {
+        outline: none;
+        border-color: #d4a548;
+    }
+    form .btn {
+        width: 100%;
+        border: none;
+    }
+    .form-msg {
+        margin-top: 15px;
+        padding: 12px;
+        background: #e8f5e8;
+        color: #2d6a2d;
+        border-radius: 5px;
+        text-align: center;
+        display: none;
+    }
+
+    footer {
+        background: #111;
+        color: #999;
+        padding: 30px 0;
+        text-align: center;
+        font-size: 14px;
+    }
+    footer a { color: #d4a548; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 800px) {
+        .hero h1 { font-size: 32px; }
+        .menu-grid, .chefs, .reviews, .about-grid {
+            grid-template-columns: 1fr;
+        }
+        .contacts-grid {
+            grid-template-columns: 1fr;
+        }
+        header .container {
+            flex-direction: column;
+            gap: 15px;
+        }
+        nav ul { gap: 15px; flex-wrap: wrap; justify-content: center; }
+        .btn--ghost { margin-left: 0; margin-top: 10px; }
+    }
+</style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <div class="logo">Агенство праздников "Happy Day"</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Главная</a></li>
+                    <li><a href="#menu">Программы праздников</a></li>
+                    <li><a href="#chefs">Наши аниматоры и ведущие</a></li>
+                    <li><a href="#chefs">Фото галерея с мероприятий</a></li>
+                    <li><a href="#reviews">Отзывы клиентов</a></li>
+                    <li><a href="#about">Цены и пакет услуг</a></li>
+                    <li><a href="#about">Вопрос ответ</a></li>
+                    <li><a href="#contacts">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero" id="home">
+            <h1><span>Агенство праздников "Happy Day"</span></h1>
+            <p>Организаторы детских и семейных праздников</p>
+            <a href="#contacts" class="btn">Забронировать</a>
+            <a href="#menu" class="btn btn--ghost">Посмотреть программы праздников</a>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">О нашем агенстве</h2>
+                <p class="section-lead">Мы открылись в 2015 году и за 11 лет стали одним из самых известных праздничным агентством столицы.</p>
+                <div class="about-grid">
+                    <div>
+                        <h3>11</h3>
+                        <p>лет<br> развлекаем гостей</p>
+                    </div>
+                    <div>
+                        <h3>5000+</h3>
+                        <p>гостей принято<br>за всё время работы</p>
+                    </div>
+                    <div>
+                        <h3>4.8</h3>
+                        <p>средний рейтинг<br>на всех площадках</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dark" id="menu">
+            <div class="container">
+                <h2 class="section-title">Наша программа праздников</h2>
+                <p class="section-lead">Самые лучшие воспоминания обретаются с нами</p>
+
+                <div class="tabs">
+                    <button class="tab active" data-cat="all">Все программы</button>
+                </div>
+
+                <div class="menu-grid">
+                    <div class="dish" data-cat="steak">
+                        <div class="dish-head"><h3>Дни рождения</h3><span class="price">3 900 ₽ за ребенка</span></div>
+                        <p>Классический праздник для любого повода</p>
+                        <span class="time">≈ 8 часов</span>
+                    </div>
+                    <div class="dish" data-cat="steak">
+                        <div class="dish-head"><h3>Выпускные в детском саду</h3><span class="price">5 200 ₽ за ребенка</span></div>
+                        <p>Современные костюмы аниматоров и наилучшие эмоции</p>
+                        <span class="time">≈ 8 часов</span>
+                    </div>
+                    <div class="dish" data-cat="steak">
+                        <div class="dish-head"><h3>Новогодние елки</h3><span class="price">4 500 ₽ за ребенка</span></div>
+                        <p>Самый нежный праздник для самых маленьких</p>
+                        <span class="time">≈ 18 минут</span>
+                    </div>
+                    <div class="dish" data-cat="fish">
+                        <div class="dish-head"><h3>Квесты на улице и в помещении</h3><span class="price"> 2 400 ₽ за ребенка</span></div>
+                        <p>Для более взрослых ребят</p>
+                        <span class="time">≈ 8 часов</span>
+                    </div>
+                    <div class="dish" data-cat="fish">
+                        <div class="dish-head"><h3>Шоу с аниматорами</h3><span class="price">2 800 ₽ за ребенка</span></div>
+                        <p>Костюмы аниматоров обговариваются при оформлении заказа</p>
+                        <span class="time">≈ 8 часов</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="chefs">
+            <div class="container">
+                <h2 class="section-title">Наши аниматоры</h2>
+                <p class="section-lead">Команда профессионалов со стажировками в разных театральных нашей страны</p>
+
+                <div class="chefs">
+                    <div class="chef">
+                        <div class="chef-photo"><img src="https://media.tenor.com/2vHljP-diQQAAAAC/rich-king.gif"></div>
+                        <div class="chef-body">
+                            <h3>Юлия Орлова</h3>
+                            <p>15 лет в гастрономии.</p>
+                        </div>
+                    </div>
+                    <div class="chef">
+                        <div class="chef-photo"><img src="https://media.tenor.com/BxIiayFM3jsAAAAd/robot-ai.gif"></div>
+                        <div class="chef-body">
+                            <h3>Мухаммадазиз Ёфтулоев</h3>
+                            <p>10 лет опыта.</p>
+                        </div>
+                    </div>
+                    <div class="chef">
+                        <div class="chef-photo"><img src="https://media.tenor.com/-B7Hy36aJwcAAAAC/fire-elmo-whahahah.gif"></div>
+                        <div class="chef-body">
+                            <h3>Ксения Белова</h3>
+                            <p>8 лет опыта.</p>
+                        </div>
+                    </div>
+                    <div class="chef">
+                        <div class="chef-photo"><img src="https://media.tenor.com/N3Rl6eFPb-4AAAAC/fire-achilles.gif"></div>
+                        <div class="chef-body">
+                            <h3>Елена Морозова</h3>
+                            <p>12 лет опыта.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="dark" id="reviews">
+            <div class="container">
+                <h2 class="section-title">Отзывы гостей</h2>
+                <p class="section-lead">Средняя оценка 4.8 на Яндекс Картах, Google и Restoclub.</p>
+
+                <div class="reviews">
+                    <div class="review">
+                        <div class="stars">★★★★★</div>
+                        <p>«Лучшее агентство праздников, которое я посещал в Москве. Сервис на уровне топовых агентств Европы. Возвращаюсь сюда с ребенком каждый раз.»</p>
+                        <div class="author">— Алексей П., гость с 2021</div>
+                    </div>
+                    <div class="review">
+                        <div class="stars">★★★★★</div>
+                        <p>«Отмечали пятилетие ребенка. Аниматор вышел познакомиться, обстановка впечатлила.»</p>
+                        <div class="author">— Мария К., гость с 2023</div>
+                    </div>
+                    <div class="review">
+                        <div class="stars">★★★★★</div>
+                        <p>«Беру карту лояльности второй год. Атмосфера, профессионал, детская радость — всё на высочайшем уровне. Рекомендую!»</p>
+                        <div class="author">— Дмитрий С., гость с 2024</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacts">
+            <div class="container">
+                <h2 class="section-title">Свяжитесь с нами</h2>
+                <p class="section-lead">Позвоните или оставьте заявку — перезвоним в течение 5 минут.</p>
+
+                <div class="contacts-grid">
+                    <div class="contacts-info">
+                        <a href="tel:+74959876543" class="phone">+7 (495) 987-65-43</a>
+                        <p><strong>Адрес:</strong> Вселенная, Сверхскопление Девы, Сверхскопление Ланиакеа, Галактика Млечный Путь, Местная группа галактик, Солнечная система, Земля, Евразия, Европа, Россия, Центральный федеральный округ, Москва, Арбат, ул. Арбатская, д. 13, кв. 37</p>
+                        <p><strong>Email:</strong> hello@mail.ru</p>
+                        <p><strong>Парковка:</strong> бесплатная для гостей</p>
+                        <p style="margin-top:20px;">Принимаем оплату картой и наличными. Возможна оплата корпоративным счётом.</p>
+                    </div>
+
+                    <form id="bookingForm">
+                        <h3>Забронировать</h3>
+                        <input type="text" id="name" placeholder="Ваше имя" required>
+                        <input type="tel" id="phone" placeholder="Телефон" required>
+                        <select id="guests" required>
+                            <option value="">Количество гостей</option>
+                            <option>1 гость</option>
+                            <option>2 гостя</option>
+                            <option>3-4 гостя</option>
+                            <option>5+ гостей (банкет)</option>
+                        </select>
+                        <button type="submit" class="btn">Отправить заявку</button>
+                        <div class="form-msg" id="formMsg">Спасибо, <span id="userName"></span>! Мы перезвоним в течение 5 минут.</div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2015–2026 Агенство праздников "Happy Day". Все права защищены.</p>
+            <p>Сделано с любовью· <a href="#home">Наверх ↑</a></p>
+        </div>
+    </footer>
+
+<script>
+    const tabs = document.querySelectorAll('.tab');
+    const dishes = document.querySelectorAll('.dish');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            const cat = tab.dataset.cat;
+            dishes.forEach(dish => {
+                if (cat === 'all' || dish.dataset.cat === cat) {
+                    dish.style.display = 'block';
+                } else {
+                    dish.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    const form = document.getElementById('bookingForm');
+    const formMsg = document.getElementById('formMsg');
+    const userName = document.getElementById('userName');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        userName.textContent = name;
+        formMsg.style.display = 'block';
+        form.reset();
+
+        setTimeout(() => {
+            formMsg.style.display = 'none';
+        }, 5000);
+    });
+
+    document.querySelectorAll('nav a, footer a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
